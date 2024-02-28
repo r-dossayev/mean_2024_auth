@@ -9,8 +9,7 @@ import { HomeComponent } from './components/home/home.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
-import {provideState, provideStore} from "@ngrx/store";
-import {postReducer} from "./state/post/post.reducer";
+
 
 @NgModule({
   declarations: [
@@ -25,11 +24,11 @@ import {postReducer} from "./state/post/post.reducer";
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   providers: [
-    provideStore(),
-    provideState({name:"PostSlice",reducer:postReducer}),
+    // provideStore(),
+    // provideState({name:"PostSlice",reducer:postReducer}),
   ],
   bootstrap: [AppComponent]
 })

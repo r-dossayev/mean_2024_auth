@@ -4,6 +4,7 @@ import {addPost, deletePost} from "./post.actions";
 
 
 export interface PostState {
+  // posts: Array<Post>;
   posts: Array<Post>;
   loading: boolean;
   error: string;
