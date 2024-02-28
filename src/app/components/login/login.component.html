@@ -1,1 +1,35 @@
-<p>login works!</p>
+<div class="container mt-5 mb-5 d-flex justify-content-center">
+  <form [formGroup]="loginForm" class="card px-1 py-4" (ngSubmit)="submit()">
+    <div class="card-body">
+      <h6 class="card-title mb-3">Authorization</h6>
+
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="form-group">
+            <input formControlName="email" class="form-control" type="email" placeholder="Email"></div>
+          <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched"  class="invalid-input">
+            Email is invalid
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="form-group">
+            <div class="input-group">
+              <input formControlName="password" class="form-control" type="password" placeholder="Password"></div>
+            <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" class="invalid-input">
+              <div *ngIf="loginForm.get('password')?.errors?.required">Password is required</div>
+              <div *ngIf="loginForm.get('password')?.errors?.minlength">Password must be at least 6 characters</div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class=" d-flex flex-column text-center px-5 mt-3 mb-3"><small class="agree-text">
+        Register
+      </small> <a routerLink="/register" class="terms">Sign up</a></div>
+      <button [disabled]="loginForm.invalid" type="submit" class="btn btn-primary btn-block confirm-button">Confirm</button>
+    </div>
+  </form>
+</div>
