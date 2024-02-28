@@ -1,17 +1,16 @@
 import {Post} from "../../models/post.model";
 import {createReducer, on} from "@ngrx/store";
-import {addPost, deletePost} from "./post.actions";
 
+import * as PostActions from './post.actions';
 
 export interface PostState {
-  // posts: Array<Post>;
   posts: Array<Post>;
   loading: boolean;
-  error: string;
+  error: string|null;
 
 }
 
-export const initialState: PostState = {
+export const initialPostState: PostState = {
   posts: [
 {
       id: '1',
@@ -33,31 +32,39 @@ export const initialState: PostState = {
     },
     {
       id: '4',
-      title: 'Post 4',
+      title: 'Posth 4',
       content: 'Post 4 Content',
       image: 'https://via.placeholder.com/150'
     },
   ],
   loading: false,
-  error: ''
+  error: null
 
 }
 
 export const postReducer = createReducer(
-  initialState,
-  on(addPost, (state, action) => {
-      return {
-        ...state,
-        loading: true
-      }
+  initialPostState,
+  on(PostActions.loadPostsSuccess, (state, {posts}) => {
+    return {
+      ...state,
+      posts: posts,
+      loading: false,
+      error: null
     }
-  ),
-  on(deletePost, (state, action) => {
-      return {
-        ...state,
-        loading: true
-      }
+  }),
+  on(PostActions.loadPostsFailure, (state, {error}) => {
+    return {
+      ...state,
+      loading: false,
+      error: error
     }
-  ),
+  }),
+  on(PostActions.loadPost, (state) => {
+    return {
+      ...state,
+      loading: true,
+      error: null
+    }
+  })
 
 )

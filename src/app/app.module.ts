@@ -9,7 +9,8 @@ import { HomeComponent } from './components/home/home.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
-
+import {provideState, provideStore, StoreModule} from "@ngrx/store";
+import {postReducer} from "./state/post/post.reducer";
 
 @NgModule({
   declarations: [
@@ -25,10 +26,11 @@ import {HttpClientModule} from "@angular/common/http";
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    // StoreModule.forRoot({ postSlice: postReducer })
   ],
   providers: [
-    // provideStore(),
-    // provideState({name:"PostSlice",reducer:postReducer}),
+    provideStore(),
+    provideState({name:"post",reducer:postReducer}),
   ],
   bootstrap: [AppComponent]
 })

@@ -1,15 +1,16 @@
 import {AppState} from "../app.state";
-import {createSelector} from "@ngrx/store";
+import {createFeatureSelector, createSelector} from "@ngrx/store";
+import {PostState} from "./post.reducer";
 
-export const selectPostState = (state: AppState) => state.postState;
+export const selectPostFeature = createFeatureSelector<PostState>('post');
 
-// export const selectPosts = createSelector(
-//   selectPostState,
-//   (state) => state.posts
-// );
 
-export const selectPosts = createSelector(
-  (state: AppState) => state.postState.posts,
-  (posts) =>posts
-  // (state) => state.posts
+export const selectAllPosts = createSelector(
+  selectPostFeature,
+  (state: PostState) => state.posts
+);
+
+export const selectPostError = createSelector(
+  selectPostFeature,
+  (state: PostState) => state.error
 );
