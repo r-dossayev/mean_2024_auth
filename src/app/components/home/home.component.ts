@@ -1,11 +1,12 @@
 import {Component} from '@angular/core';
 import {Observable} from "rxjs";
 import {Post} from "../../models/post.model";
-import {AppState} from "../../state/app.state";
-import {select, Store} from "@ngrx/store";
+import {Store} from "@ngrx/store";
 import * as PostActions from "../../state/post/post.actions";
 import * as PostSelectors from "../../state/post/post.selector";
+import * as AuthSelectors from "../../state/auth/auth.selector";
 import {PostService} from "../../services/post.service";
+import {User} from "../../models/user.model";
 
 @Component({
   selector: 'app-home',
@@ -14,9 +15,11 @@ import {PostService} from "../../services/post.service";
 })
 export class HomeComponent {
   posts$!: Observable<Post[]>;
+  isAuth$!: Observable<boolean>;
   error$!: Observable<string | null>;
+  $authUser!: Observable<User|null>;
 
-  constructor(private store: Store<{ postSlice: { posts: Post[] } }>, private postService: PostService) {
+  constructor(private store: Store<any>, private postService: PostService) {
     postService.getPosts().subscribe(posts => {
         this.store.dispatch(PostActions.loadPostsSuccess({posts: posts}))
       },
@@ -25,24 +28,12 @@ export class HomeComponent {
       })
     this.posts$ = this.store.select(PostSelectors.selectAllPosts)
     this.error$ = this.store.select(PostSelectors.selectPostError)
+    this.isAuth$ = this.store.select(AuthSelectors.selectIsAuthenticated)
+    this.$authUser = this.store.select(AuthSelectors.selectAuthUser)
+
   }
 
   ngOnInit(): void {
   }
 
-  addPost() {
-    console.log('Add Post')
-  }
-
-  deletePost() {
-    console.log('Delete Post')
-  }
-
-  updatePost() {
-    console.log('Update Post')
-  }
-
-  getPosts() {
-    console.log('Get Posts')
-  }
 }

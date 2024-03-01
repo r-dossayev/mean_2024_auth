@@ -11,34 +11,9 @@ export interface PostState {
 }
 
 export const initialPostState: PostState = {
-  posts: [
-{
-      id: '1',
-      title: 'Post 1',
-      content: 'Post 1 Content',
-      image: 'https://via.placeholder.com/150'
-    },
-    {
-      id: '2',
-      title: 'Post 2',
-      content: 'Post 2 Content',
-      image: 'https://via.placeholder.com/150'
-    },
-    {
-      id: '3',
-      title: 'Post 3',
-      content: 'Post 3 Content',
-      image: 'https://via.placeholder.com/150'
-    },
-    {
-      id: '4',
-      title: 'Posth 4',
-      content: 'Post 4 Content',
-      image: 'https://via.placeholder.com/150'
-    },
-  ],
+  posts: [],
   loading: false,
-  error: null
+  error: null,
 
 }
 

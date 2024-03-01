@@ -1,24 +1,33 @@
 <div class="container mt-5 mb-5 d-flex justify-content-center">
-  <div class="card px-1 py-4">
+  <form [formGroup]="registerForm" class="card px-1 py-4" (ngSubmit)="submitted()">
     <div class="card-body">
       <h6 class="card-title mb-3">Registration</h6>
 
       <div class="row">
         <div class="col-sm-12">
           <div class="form-group">
-            <input class="form-control" type="text" placeholder="Name"> </div>
+            <input formControlName="lastName" class="form-control" type="text" placeholder="last Name"></div>
+          <div *ngIf="registerForm.get('lastName')?.invalid && registerForm.get('lastName')?.touched" class="invalid-input">
+            lastName is invalid
+          </div>
         </div>
       </div>
       <div class="row">
         <div class="col-sm-12">
           <div class="form-group">
-            <input class="form-control" type="text" placeholder="Surname"> </div>
+            <input formControlName="firstName" class="form-control" type="text" placeholder="first Name"></div>
+          <div *ngIf="registerForm.get('firstName')?.invalid && registerForm.get('firstName')?.touched" class="invalid-input">
+            firstName is invalid
+          </div>
         </div>
       </div>
       <div class="row">
         <div class="col-sm-12">
           <div class="form-group">
-            <input class="form-control" type="email" placeholder="Email"> </div>
+            <input formControlName="email" class="form-control" type="email" placeholder="Email"></div>
+          <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched" class="invalid-input">
+            Email is invalid
+          </div>
         </div>
       </div>
 
@@ -26,13 +35,20 @@
         <div class="col-sm-12">
           <div class="form-group">
             <div class="input-group">
-              <input class="form-control" type="password" placeholder="Password"> </div>
+              <input formControlName="password" class="form-control" type="password" placeholder="Password"></div>
+            <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched" class="invalid-input">
+              <div *ngIf="registerForm.get('password')?.errors?.required">Password is required</div>
+              <div *ngIf="registerForm.get('password')?.errors?.minlength">Password must be at least 6 characters</div>
+
+            </div>
           </div>
         </div>
       </div>
-      <div class=" d-flex flex-column text-center px-5 mt-3 mb-3"> <small class="agree-text">
+      <div class=" d-flex flex-column text-center px-5 mt-3 mb-3"><small class="agree-text">
         Login
-      </small> <a routerLink="/login" class="terms">Sign in</a> </div> <button class="btn btn-primary btn-block confirm-button">Confirm</button>
+      </small> <a routerLink="/login" class="terms">Sign in</a></div>
+      <button [disabled]="registerForm.invalid" type="submit" class="btn btn-primary btn-block confirm-button">Confirm
+      </button>
     </div>
-  </div>
+  </form>
 </div>

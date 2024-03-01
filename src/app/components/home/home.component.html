@@ -9,4 +9,9 @@
 <!--  <button (click)="deletePost(post.id)">Delete</button>-->
   <hr>
 
+  <p>{{($authUser|async)?.lastName}}</p>
+  <p>{{($authUser|async)?.firstName}}</p>
+  <p>{{($authUser|async)?.email}}</p>
+  <p>{{($authUser|async)?._id}}</p>
 </div>
+

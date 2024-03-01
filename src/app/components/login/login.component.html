@@ -7,7 +7,7 @@
         <div class="col-sm-12">
           <div class="form-group">
             <input formControlName="email" class="form-control" type="email" placeholder="Email"></div>
-          <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched"  class="invalid-input">
+          <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched" class="invalid-input">
             Email is invalid
           </div>
         </div>
@@ -29,7 +29,8 @@
       <div class=" d-flex flex-column text-center px-5 mt-3 mb-3"><small class="agree-text">
         Register
       </small> <a routerLink="/register" class="terms">Sign up</a></div>
-      <button [disabled]="loginForm.invalid" type="submit" class="btn btn-primary btn-block confirm-button">Confirm</button>
+      <button [disabled]="loginForm.invalid" type="submit" class="btn btn-primary btn-block confirm-button">Confirm
+      </button>
     </div>
   </form>
 </div>
