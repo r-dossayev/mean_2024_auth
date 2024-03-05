@@ -4,3 +4,11 @@
   font-size: 12px;
  margin: 5px;
 }
+
+
+@import "src/static/navbar/assets/vendor/bootstrap/css/bootstrap.min.css";
+@import "src/static/navbar/assets/vendor/bootstrap-icons/bootstrap-icons.css";
+@import "src/static/navbar/assets/vendor/boxicons/css/boxicons.min.css";
+@import "src/static/navbar/assets/vendor/remixicon/remixicon.css";
+@import "src/static/navbar/assets/css/style.css";
+

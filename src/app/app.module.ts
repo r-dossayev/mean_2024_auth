@@ -12,6 +12,7 @@ import {HttpClientModule} from "@angular/common/http";
 import {provideState, provideStore} from "@ngrx/store";
 import {postReducer} from "./state/post/post.reducer";
 import {authReducer} from "./state/auth/auth.reducer";
+import {NgOptimizedImage} from "@angular/common";
 
 @NgModule({
   declarations: [
@@ -21,14 +22,15 @@ import {authReducer} from "./state/auth/auth.reducer";
     HomeComponent,
     NotFoundComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    FormsModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    // StoreModule.forRoot({ postSlice: postReducer })
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        FormsModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+        NgOptimizedImage,
+        // StoreModule.forRoot({ postSlice: postReducer })
+    ],
   providers: [
     provideStore(),
     provideState({name:"post",reducer:postReducer}),

@@ -15,6 +15,10 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    is_online:{
+      type:String,
+      default:"0"
+    },
     createdAt: Date
 });
 

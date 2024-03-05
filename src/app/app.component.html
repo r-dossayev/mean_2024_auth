@@ -1,33 +1,124 @@
 <section>
-  <nav class="navbar navbar-expand-lg bg-body-tertiary">
-    <div class="container-fluid">
-      <a class="navbar-brand" routerLink="/">Navbar</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" routerLink="/">Home</a>
-          </li>
+  <header id="header" class="header fixed-top d-flex align-items-center">
 
-          <li *ngIf="!(isAuth$|async)" class="nav-item">
-            <a class="nav-link" routerLink="/login">Login</a>
-          </li>
-          <li *ngIf="!(isAuth$|async)" class="nav-item">
-            <a class="nav-link" routerLink="/register">Register</a>
-          </li>
-          <li *ngIf="(isAuth$|async)" class="nav-item">
-            <a class="nav-link" routerLink="/profile">Profile {{(authUser$|async)?.firstName}}</a>
-          </li>
-          <li *ngIf="(isAuth$|async)" class="nav-item">
-            <a class="nav-link"  (click)="logout()">Logout</a>
-          </li>
-        </ul>
-      </div>
+    <div class="d-flex align-items-center justify-content-between">
+      <a routerLink="/" class="logo d-flex align-items-center">
+        <img src="/assets/img/logo.png" alt="" height="50" width="50">
+        <span class="d-none d-lg-block">Poster</span>
+      </a>
+      <i class="bx bx-menu toggle-sidebar-btn"></i>
     </div>
-  </nav>
-  <router-outlet></router-outlet>
+
+    <div class="search-bar">
+      <form class="search-form d-flex align-items-center" method="get" action="/search">
+        <input type="text" name="query" placeholder="Search" title="Enter search keyword">
+        <button type="submit" title="Search"><i class="bi bi-search"></i></button>
+      </form>
+    </div>
+
+    <nav class="header-nav ms-auto">
+      <ul class="d-flex align-items-center">
+
+        <li class="nav-item d-block d-lg-none">
+          <a class="nav-link nav-icon search-bar-toggle " href="#">
+            <i class="bi bi-search"></i>
+          </a>
+        </li>
+        <li class="nav-item dropdown pe-3"  *ngIf="(isAuth$|async)" >
+          <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+<!--            <img  alt="Profile" class="rounded-circle">-->
+            <span class="d-none d-md-block dropdown-toggle ps-2" >dd{{(authUser$|async)?.firstName}}</span>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+            <li class="dropdown-header">
+              <h6>{{(authUser$|async)?.firstName}}</h6>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <a class="dropdown-item d-flex align-items-center" routerLink="/profile">
+                <i class="bi bi-person"></i>
+                <span>My Profile</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+<!--            <li sec:authorize="hasAnyRole('ROLE_ADMIN')">-->
+<!--              <a class="dropdown-item d-flex align-items-center" routerLink="@{'/admin'}">-->
+<!--                <i class="bi bi-gear"></i>-->
+<!--                <span>Admin </span>-->
+<!--              </a>-->
+<!--            </li>-->
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li>
+              <form id="logoutForm" style="overflow: hidden"  method="post"></form>
+              <button (click)="logout()" style="border: none" class="dropdown-item d-flex align-items-center" href="">
+                <i class="bi bi-box-arrow-right"></i><span>Sign Out</span>
+              </button>
+            </li>
+
+          </ul><!-- End Profile Dropdown Items -->
+        </li><!-- End Profile Nav -->
+      </ul>
+    </nav>
+  </header>
+
+  <aside id="sidebar" class="sidebar">
+
+    <ul class="sidebar-nav" id="sidebar-nav">
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="/">
+          <i class="bi bi-app"></i>
+          <span>home</span>
+        </a>
+      </li><!-- End Profile Page Nav -->
+
+      <li class="nav-item" *ngIf="!(isAuth$|async)">
+        <a class="nav-link collapsed" routerLink="/login">
+          <i class="bi bi-door-closed"></i>
+          <span>login</span>
+        </a>
+      </li>
+      <li class="nav-item" *ngIf="!(isAuth$|async)">
+        <a class="nav-link collapsed" routerLink="/register" >
+          <i class='bx bxs-user-check'></i>
+          <span>register</span>
+        </a>
+      </li>
+
+      <li class="nav-item" *ngIf="(isAuth$|async)">
+        <a class="nav-link collapsed" routerLink="/profile">
+          <i class="bi bi-file-person-fill"></i>
+          <span>profile </span>
+        </a>
+      </li>
+      <li class="nav-item" *ngIf="(isAuth$|async)">
+        <a class="nav-link collapsed" routerLink="/friends/$globalAuthUser.username">
+          <i class="bi bi-people"></i>
+          <span>friends</span>
+        </a>
+      </li>
+      <li class="nav-item" *ngIf="(isAuth$|async)">
+        <a class="nav-link collapsed" routerLink="/groups/${globalAuthUser.username">
+          <i class="bi bi-people"></i>
+          <span>groups</span>
+        </a>
+      </li>
+    </ul>
+
+  </aside>
+  <main id="main" class="main">
+    <div>
+      <router-outlet></router-outlet>
+    </div>
+
+  </main>
 
 
 </section>
