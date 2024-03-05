@@ -13,3 +13,7 @@ export const selectIsAuthenticated = createSelector(
   selectAuthFeature,
   (state: AuthState) => state.isAuthenticated
 )
+export const selectUserList = createSelector(
+  selectAuthFeature,
+  (state: AuthState) => state.userLists
+)

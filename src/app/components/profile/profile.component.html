@@ -1,1 +1,278 @@
-<p>profile works!</p>
+<div class="mt-3">
+  <div class="container">
+    <section class="section profile">
+      <div class="row">
+        <div class="col-xl-4">
+
+          <div class="card">
+            <div class="card-body profile-card pt-4 d-flex flex-column align-items-center h-100">
+
+              <img
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBs5uKF5Khva20-m_ehhfIgIOHNqiG4XlUEw&usqp=CAU"
+                alt="Profile" class="rounded-circle">
+              <h2>{{(authUser$|async)?.email}}</h2>
+              <h3>Developer</h3>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="col-xl-8">
+
+          <div class="card">
+            <div class="card-body pt-3">
+              <!-- Bordered Tabs -->
+              <ul class="nav nav-tabs nav-tabs-bordered">
+                <li class="nav-item">
+                  <button class="nav-link active" data-bs-toggle="tab"
+                          data-bs-target="#profile-overview">Overview
+                  </button>
+                </li>
+                <li class="nav-item">
+                  <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Edit
+                    Profile
+                  </button>
+                </li>
+                <li class="nav-item">
+                  <button class="nav-link" data-bs-toggle="tab"
+                          data-bs-target="#profile-change-password">Change Password
+                  </button>
+                </li>
+              </ul>
+              <div class="tab-content pt-2">
+
+                <div class="tab-pane fade show active profile-overview" id="profile-overview">
+                  <h5 class="card-title">BIO</h5>
+                  <p class="small fst-italic">{{(authUser$|async)?.firstName}}</p>
+
+                  <h5 class="card-title">Profile Details</h5>
+
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label ">Full Name</div>
+                    <div class="col-lg-9 col-md-8"
+                         th:text="${user.getFullName()}">{{(authUser$|async)?.firstName}} {{(authUser$|async)?.lastName}}</div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">Phone</div>
+                    <div class="col-lg-9 col-md-8">87053779188</div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">Job</div>
+                    <div class="col-lg-9 col-md-8">developer</div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">Email</div>
+                    <div class="col-lg-9 col-md-8">{{(authUser$|async)?.firstName}}</div>
+                  </div>
+
+                </div>
+
+                <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
+
+                  <!-- Profile Edit Form -->
+                  <form th:action="@{'/profile/update/user/data'}" method="post"
+                        enctype="multipart/form-data">
+                    <div class="row mb-3">
+                      <label class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
+                      <div class="col-md-8 col-lg-9">
+                        <img th:src="${user.loadUserAvatar()}" alt="Profile">
+                        <div class="pt-2">
+                          <input type="file" name="avatarFile" class="form-control">
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row mb-3">
+                      <label for="firstName" class="col-md-4 col-lg-3 col-form-label">
+                        First Name</label>
+                      <div class="col-md-8 col-lg-9">
+                        <input name="firstName" type="text" class="form-control" id="firstName"
+                               th:value="${user.firstName}">
+                      </div>
+                    </div>
+
+                    <div class="row mb-3">
+                      <label for="bio" class="col-md-4 col-lg-3 col-form-label">Bio</label>
+                      <div class="col-md-8 col-lg-9">
+                                                <textarea name="bio" class="form-control" id="bio"
+                                                          style="height: 100px" th:text="${user.bio}"></textarea>
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <label for="Job" class="col-md-4 col-lg-3 col-form-label">Job</label>
+                      <div class="col-md-8 col-lg-9">
+                        <input name="job" type="text" class="form-control" id="Job"
+                               th:value="${user.job}">
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <label for="lastName"
+                             class="col-md-4 col-lg-3 col-form-label">Last Name</label>
+                      <div class="col-md-8 col-lg-9">
+                        <input name="lastName" type="text" class="form-control" id="lastName">
+                      </div>
+                    </div>
+
+                    <div class="row mb-3">
+                      <label for="Phone" class="col-md-4 col-lg-3 col-form-label">Phone</label>
+                      <div class="col-md-8 col-lg-9">
+                        <input name="phoneNumber" type="text" class="form-control" id="Phone">
+                      </div>
+                    </div>
+
+                    <div class="row mb-3">
+                      <label for="Email" class="col-md-4 col-lg-3 col-form-label">Email</label>
+                      <div class="col-md-8 col-lg-9">
+                        <input name="email" type="email" class="form-control" id="Email">
+                      </div>
+                    </div>
+                    <div class="text-center">
+                      <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </div>
+                  </form><!-- End Profile Edit Form -->
+
+                </div>
+                <div class="tab-pane fade pt-3" id="profile-change-password">
+                  <!-- Change Password Form -->
+                  <form th:action="@{'/profile/change/password'}" method="post">
+
+                    <div class="row mb-3">
+                      <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current
+                        Password</label>
+                      <div class="col-md-8 col-lg-9">
+                        <input name="old_password" type="password" class="form-control"
+                               id="currentPassword">
+                      </div>
+                    </div>
+
+                    <div class="row mb-3">
+                      <label for="new_password" class="col-md-4 col-lg-3 col-form-label">New
+                        Password</label>
+                      <div class="col-md-8 col-lg-9">
+                        <input name="new_password" type="password" class="form-control"
+                               id="new_password">
+                      </div>
+                    </div>
+
+                    <div class="row mb-3">
+                      <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Repeat
+                        New Password</label>
+                      <div class="col-md-8 col-lg-9">
+                        <input name="renew_password" type="password" class="form-control"
+                               id="renewPassword">
+                      </div>
+                    </div>
+
+                    <div class="text-center">
+                      <button type="submit" class="btn btn-primary">Change Password</button>
+                    </div>
+                  </form><!-- End Change Password Form -->
+
+                </div>
+
+              </div><!-- End Bordered Tabs -->
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+    <!--start create user post form-->
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <form action="/profile/create/post'" class="card" method="post" enctype="multipart/form-data">
+          <div class="card-header d-flex">
+            <a href=""><img
+              style="border: 1px solid #DBDBDB; border-radius: 50%"
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTDJzEaxLN-jGRYYUO65pWu7Q9GXoNt4LUSSA&usqp=CAU"
+              alt="profile" width="50" height="50"></a>
+            <input id="post-review" type="text" name="postText" placeholder="What's on your mind?" class="form-control"
+                   style="outline: none; padding: 10px; width: 90%">
+          </div>
+          <div id="post-image" style="text-align: center;">
+            <img src="#" id="post_image" alt="post" style="display: none">
+          </div>
+          <div class="d-flex align-items-center justify-content-center" style="padding: 10px;">
+            <i id="post_image_button" class='bi bi-card-image' style="cursor:pointer;"></i>
+            <input type="file" style="display: none" id="post_image_input" name="postImage"
+                   onchange="readURL(this)"/>
+            <button type="submit" class="btn btn-primary" style="margin-left: 300px">send</button>
+          </div>
+        </form>
+      </div>
+      <!--      foreach loop      -->
+      <div class="col-md-8" th:each="post: ${user.posts}">
+        <div class="card">
+          <div class="card-header">
+            <div class="d-flex">
+              <a th:href="@{'/profile/' + ${user.username}}"><img
+                th:src="${user.loadUserAvatar()}"
+                alt="profile" width="50"
+                class="rounded-circle"
+                style="border: 1px solid #DBDBDB"></a>
+              <i class="bi bi-three-dots-vertical"
+                 style="position: absolute; right: 25px; cursor:pointer;" data-bs-toggle="dropdown"
+                 aria-expanded="false"></i>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">share</a></li>
+                <li>
+                  <form th:action="@{'/profile/delete/post'}" method="post">
+                    <input type="hidden" name="postId" th:value="${post.id}">
+                    <a href="#" class="dropdown-item">
+                      <button type="submit" class="border-0 bg-transparent">
+                        delete
+                      </button>
+                    </a>
+                  </form>
+                </li>
+              </ul>
+              <span><a href="#"
+                       style="margin-left: 15px; margin-top: 5px; color: black" th:text="${user.username}">
+                                            <img
+                                              src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Twitter_Verified_Badge.svg/1200px-Twitter_Verified_Badge.svg.png"
+                                              alt="" width="15" style="margin-bottom: 1px;">
+                                    <span style="color:gray;"></span></a>
+                            <br>
+                            <span style="font-size: 14px; color: gray; margin-left: 15px"
+                                  th:text="${post.difForHumans()}"></span>
+                        </span>
+            </div>
+            <a href="#">
+              <div style="margin-left: 55px; margin-bottom: 10px; margin-top: 5px;">
+                <p style="color: black" th:text="${post.text}"></p>
+              </div>
+              <div th:if="${post.image != null}" style="text-align: center; padding-bottom: 20px">
+                <a href="#"><img
+                  th:src="${post.image}"
+                  alt="post" width="500"
+                  style="border-radius: 10px; border: 1px solid #DBDBDB"></a>
+              </div>
+            </a>
+            <div class="post-btns" style="width: 510px; margin-left: auto; margin-right: auto;">
+              <div style="float: left; display: flex">
+                <form action="#" method="post">
+
+                  <button style="font-size: 12px; color:gray" class="bg-transparent border-0"
+                          type="submit">like
+                  </button>
+                </form>
+                <form action="">
+                  <button style="font-size: 12px; color: gray" class="bg-transparent border-0"><a
+                    style="color: gray"
+                    href="#">comment</a></button>
+                </form>
+              </div>
+              <div class="post-count" style="float: right">
+                <span style="font-size: 12px; color: gray">123 likes</span>
+                <span style="font-size: 12px; color: gray; margin-left: 10px">324 comments</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -13,6 +13,7 @@ import {provideState, provideStore} from "@ngrx/store";
 import {postReducer} from "./state/post/post.reducer";
 import {authReducer} from "./state/auth/auth.reducer";
 import {NgOptimizedImage} from "@angular/common";
+import {otherReducer} from "./state/other/other.reducer";
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import {NgOptimizedImage} from "@angular/common";
     provideStore(),
     provideState({name:"post",reducer:postReducer}),
     provideState({name:"auth",reducer:authReducer}),
+    provideState({name:"other",reducer:otherReducer}),
   ],
   bootstrap: [AppComponent]
 })

@@ -20,4 +20,9 @@ export const logout = createAction(
   '[Auth] Logout'
 );
 
+export const userLists = createAction(
+  '[Auth] User Lists',
+  props<{users:User[]}>()
+);
+
 

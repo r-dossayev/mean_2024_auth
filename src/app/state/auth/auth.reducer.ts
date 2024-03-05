@@ -7,12 +7,14 @@ export interface AuthState {
   user: User | null;
   loading: boolean;
   error: string | null;
+  userLists: User[];
   isAuthenticated: boolean;
 }
 
 export const initialPostState: AuthState = {
   user: null,
   loading: false,
+  userLists: [],
   error: null,
   isAuthenticated: false
 }
@@ -53,4 +55,10 @@ export const authReducer = createReducer(
       isAuthenticated: false
     }
   }),
+  on(AuthActions.userLists, (state, {users}) => {
+    return {
+      ...state,
+      userLists: users
+    }
+  })
 )

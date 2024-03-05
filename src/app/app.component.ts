@@ -25,7 +25,6 @@ export class AppComponent {
 
 
   }
-
   logout() {
     this.authService.logout().subscribe(data => {
       console.log(data)
