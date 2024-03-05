@@ -14,7 +14,7 @@ import {UserService} from "../../services/user.service";
 })
 export class UserComponent implements OnInit {
 
-  user!: User
+  user:User = {_id:"", email:"", firstName: "", lastName: "", role: "",createdAt:null,bio:null}
 
   constructor(private route: ActivatedRoute, private userService: UserService, private router: Router
   ) {

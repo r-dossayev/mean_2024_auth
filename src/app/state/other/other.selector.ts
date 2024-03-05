@@ -1,7 +1,7 @@
 import {createFeatureSelector, createSelector} from "@ngrx/store";
 import {OtherState} from "./other.reducer";
 
-export const selectAuthFeature = createFeatureSelector<OtherState>('auth');
+export const selectAuthFeature = createFeatureSelector<OtherState>('other');
 
 
 

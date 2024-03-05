@@ -22,7 +22,14 @@ const loadChats = async (req, res) => {
   const senderId = req.user._id;
   const receiverId = req.params.user_id;
   try {
-    const chats = Chat.find({senderId: senderId, receiverId: receiverId}).exec();
+    //
+    const chats = await Chat.find({
+      $or: [
+        { senderId: senderId, receiverId: receiverId },
+        { senderId: receiverId, receiverId: senderId }
+      ]
+    }).exec();
+    console.log(chats)
     res.status(200).json(chats);
   } catch (e) {
     res.status(500).json({message: 'Server error'});

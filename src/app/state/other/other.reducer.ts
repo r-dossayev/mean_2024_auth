@@ -5,7 +5,7 @@ import * as OtherActions from './other.actions';
 import {Chat} from "../../models/chat.model";
 
 export interface OtherState {
-  chats: Chat[];
+  chats: Array<Chat>
   loading: boolean;
   error: string|null;
   selectedUser: User|null;

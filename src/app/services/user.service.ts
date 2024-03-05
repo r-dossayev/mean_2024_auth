@@ -25,11 +25,11 @@ export class UserService {
   }
 
   getUserChats(id:string):Observable<Chat[]>{
-    return this.http.get<Chat[]>(this.url + '/chat/'+id, {withCredentials: true});
+    return this.http.get<Chat[]>(this.url + 'chat/'+id, {withCredentials: true});
   }
 
-  sendMessage(data: {to:string, message:string}):Observable<any>{
-    return this.http.post(this.url + '/chat/'+data.to, data, {withCredentials: true});
+  sendMessage(data: {to:string, message:string}):Observable<Chat>{
+    return this.http.post<Chat>(this.url + 'chat/'+data.to, data, {withCredentials: true});
   }
 
 }

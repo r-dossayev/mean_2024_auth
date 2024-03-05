@@ -14,6 +14,7 @@ import {postReducer} from "./state/post/post.reducer";
 import {authReducer} from "./state/auth/auth.reducer";
 import {NgOptimizedImage} from "@angular/common";
 import {otherReducer} from "./state/other/other.reducer";
+import {ChatComponent} from "./components/chat/chat.component";
 
 @NgModule({
   declarations: [
@@ -21,7 +22,9 @@ import {otherReducer} from "./state/other/other.reducer";
     LoginComponent,
     RegisterComponent,
     HomeComponent,
-    NotFoundComponent
+      ChatComponent,
+    NotFoundComponent,
+
   ],
     imports: [
         BrowserModule,

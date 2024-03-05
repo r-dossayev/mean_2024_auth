@@ -5,5 +5,5 @@ export  interface User {
   lastName: string;
   role: string;
   bio: string|null;
-  createdAt: Date;
+  createdAt: Date|null;
 }
