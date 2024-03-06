@@ -14,8 +14,13 @@ mongoose.connect(process.env.MONGO_URI,)
 const routes = require('./routes/routes');
 
 const app = express();
-// const server = http.createServer(app);
-const port = process.env.PORT ||8686;
+const server = http.createServer(app);
+const io = socketIo(server, {
+  cors: {
+    origin: '*',
+  }
+});
+const port = process.env.PORT || 8686;
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
@@ -27,9 +32,21 @@ app.use(cors({
 }));
 
 app.use('/api', routes);
-app.listen(port, () => {
-  console.log(`app listening at http://localhost:${port}`);
-});
-// server.listen(3001, () => {
-//   console.log(`Server is running on port ${port}`);
+// app.listen(port, () => {
+//   console.log(`app listening at http://localhost:${port}`);
 // });
+server.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+});
+
+io.on('connection', (socket) => {
+  socket.on('message', (data) => {
+    io.emit('loadNewChat', {message: data.message, senderId: data.senderId, receiverId: data.receiverId, createdAt: data.createdAt,});
+  });
+  socket.on('disconnect', () => {
+    console.log('user disconnected');
+  });
+
+});
+
+

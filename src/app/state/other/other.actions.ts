@@ -19,5 +19,9 @@ export const selectUser = createAction('[Chat] Select User',
   props<{user:User}>()
 );
 
+export const setJoinRoom = createAction('[Chat] Join Room',
+  props<{roomId:string}>()
+);
+
 
 

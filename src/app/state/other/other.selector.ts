@@ -15,3 +15,8 @@ export const selectSelectedUser = createSelector(
   selectAuthFeature,
   (state: OtherState) => state.selectedUser
 );
+
+export const selectRoomId = createSelector(
+  selectAuthFeature,
+  (state: OtherState) => state.chatRoom
+);

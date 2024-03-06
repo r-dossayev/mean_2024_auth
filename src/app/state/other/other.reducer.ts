@@ -3,19 +3,23 @@ import {createReducer, on} from "@ngrx/store";
 
 import * as OtherActions from './other.actions';
 import {Chat} from "../../models/chat.model";
+import {setJoinRoom} from "./other.actions";
 
 export interface OtherState {
   chats: Array<Chat>
   loading: boolean;
-  error: string|null;
-  selectedUser: User|null;
+  error: string | null;
+  selectedUser: User | null;
+
+  chatRoom: string | null;
 }
 
 export const initialPostState: OtherState = {
   chats: [],
   loading: false,
   error: null,
-  selectedUser: null
+  selectedUser: null,
+  chatRoom: null
 };
 
 
@@ -54,6 +58,10 @@ export const otherReducer = createReducer(
       selectedUser: user
     }
   }),
-
-
+  on(OtherActions.setJoinRoom, (state, {roomId}) => {
+    return {
+      ...state,
+      chatRoom: roomId
+    }
+  })
 )

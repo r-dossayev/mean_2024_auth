@@ -3,35 +3,22 @@
     <div class="col-lg-12 position-relative">
       <div class="chat-wrapper pt-0 w-100 position-relative scroll-bar bg-white theme-dark-bg">
         <div class="chat-body p-3 ">
-          <div *ngFor="let chat of chats$|async" id="messages-content" class="messages-content pb-5">
-
-            <div *ngIf="chat.senderId === (authUser$|async)?._id" class="message-item outgoing-message">
+          <div *ngFor="let chat of chats$ | async" id="messages-content" class="messages-content pb-5">
+            <div class="message-item" [ngClass]="{'outgoing-message': chat.senderId === (authUser$ | async)?._id}">
               <div class="message-user">
                 <figure class="avatar d-flex">
                   <img
                     src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBs5uKF5Khva20-m_ehhfIgIOHNqiG4XlUEw&usqp=CAU"
                     alt="image">
                   <div class="message-wrap">
-                    <span> {{chat.message}}</span>
-                    <p class="time text-end">'+createdAt+'</p>
-                  </div>
-                </figure>
-              </div>
-            </div>
-            <div *ngIf="chat.senderId !== (authUser$|async)?._id" class="message-item">
-              <div class="message-user">
-                <figure class="avatar d-flex">
-                  <img
-                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBs5uKF5Khva20-m_ehhfIgIOHNqiG4XlUEw&usqp=CAU"
-                    alt="image">
-                  <div class="message-wrap">
-                    <span> {{chat.message}}</span>
-                    <p class="time text-end">'+createdAt+'</p>
+                    <span>{{ chat.message }}</span>
+                    <p class="time text-end" style="margin-left: 10px">{{ chat.createdAt|date:'hh:mm' }}</p>
                   </div>
                 </figure>
               </div>
             </div>
           </div>
+
         </div>
       </div>
       <div class="chat-bottom dark-bg p-3 shadow-none theme-dark-bg" style="width: 98%;">
