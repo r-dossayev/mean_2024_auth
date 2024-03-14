@@ -6,7 +6,7 @@ const userController = require('../controllers/profile/profileController');
 
 router.post('/register', authController.register);
 router.post('/login', authController.login);
-router.post('/logout',isAuth, authController.logout);
+router.post('/logout', authController.logout);
 router.get('/auth_user', isAuth, authController.authData);
 router.get('/user/list', userController.userList);
 router.get('/user/:user_id', userController.userProfileWhereId);

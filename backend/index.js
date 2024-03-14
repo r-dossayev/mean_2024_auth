@@ -5,6 +5,31 @@ const cookieParser = require('cookie-parser');
 const http = require('http');
 require('dotenv').config();
 const socketIo = require('socket.io');
+const multer = require('multer');
+const multerS3 = require('multer-s3');
+const AWS = require('aws-sdk');
+
+AWS.config.update({
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  // region: 'eu-central-1'
+});
+
+const s3 = new AWS.S3();
+
+const upload = multer({
+  storage: multerS3({
+    s3: s3,
+    bucket: process.env.AWS_BUCKET_NAME,
+    acl: 'public-read',
+    contentType: multerS3.AUTO_CONTENT_TYPE,
+    key: function (req, file, cb) {
+      cb(null, Date.now().toString() + '-' + file.originalname);
+    }
+  })
+});
+
+
 
 
 mongoose.connect(process.env.MONGO_URI,)
@@ -41,7 +66,7 @@ server.listen(port, () => {
 
 io.on('connection', (socket) => {
   socket.on('message', (data) => {
-    io.emit('loadNewChat', {message: data.message, senderId: data.senderId, receiverId: data.receiverId, createdAt: data.createdAt,});
+    io.emit('loadNewChat', {message: data.message, senderId: data.senderId, receiverId: data.receiverId, createdAt: data.createdAt, photo: data.photo});
   });
   socket.on('disconnect', () => {
     console.log('user disconnected');

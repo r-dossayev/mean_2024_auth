@@ -26,6 +26,7 @@ export class AppComponent {
 
   }
   logout() {
+    console.log("sss")
     this.authService.logout().subscribe(data => {
       console.log(data)
       this.store.dispatch(AuthActions.logout())

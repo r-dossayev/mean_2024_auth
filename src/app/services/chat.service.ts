@@ -26,7 +26,7 @@ export class ChatService {
     this.socket.emit('join', data)
   }
 
-  sendMessage(data: { to: string, message: string }) {
+  sendMessage(data: { to: string, message: string, photo: string | null }) {
     this.http.post<Chat>(this.url + 'chat/' + data.to, data, {withCredentials: true}).subscribe(
       res => {
         this.socket.emit('message', res)

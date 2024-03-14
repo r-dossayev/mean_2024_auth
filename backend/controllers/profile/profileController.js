@@ -41,6 +41,8 @@ const sendMessage = async (req, res) => {
   const senderId = req.user._id;
   const receiverId = req.params.user_id;
   const message = req.body.message;
+  const photo = req.body.photo;
+  // if ()
   try {
     const chat = await Chat.create({
       senderId: senderId,

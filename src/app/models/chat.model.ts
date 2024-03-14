@@ -8,6 +8,7 @@ export interface Chat {
     senderId: string;
     receiverId: string
     message: string;
+    image: string|null;
     // isRead: boolean;
     createdAt: Date;
 }

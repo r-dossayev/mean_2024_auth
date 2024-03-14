@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {UserService} from "../../services/user.service";
 import {ActivatedRoute, ParamMap, Router} from "@angular/router";
 import {Chat} from "../../models/chat.model";
@@ -22,6 +22,7 @@ export class ChatComponent implements OnInit {
   chats$!: Observable<Chat[]>
   chatForm!: FormGroup;
   authUser$!: Observable<User | null>;
+  @ViewChild('chatContainer') private chatContainer!: ElementRef;
 
   constructor(private userService: UserService, private store: Store<any>,
               private route: ActivatedRoute, private router: Router,
@@ -40,57 +41,59 @@ export class ChatComponent implements OnInit {
       }
     })
     this.chatForm = new FormGroup({
-      message: new FormControl<string>('', [Validators.required]),
+      message: new FormControl<string>(' .', [Validators.required]),
+      photo: new FormControl<string|null>(null)
     })
 
-  }
+    this.scrollToBottom(0);
 
+  }
+  onImagePicked(event: Event) {
+    // @ts-ignore
+    const file = (event.target as HTMLInputElement).files[0];
+    this.chatForm.patchValue({ photo: file});
+  }
   sendMessage() {
     if (!this.chatForm.invalid) {
-      const data = {to: this.route.snapshot.params.user_id, message: this.chatForm.value.message}
+     // if (this.chatForm.value.photo) {
+     //    const data = {to: this.route.snapshot.params.user_id, message: this.chatForm.value.message}
+     //    this.chatService.sendMessage(data)
+     //    this.chatService.getMessages().subscribe(data => {
+     //      this.store.dispatch(OtherActions.createChat({chat: data}))
+     //    })
+     // }
+      const data = {to: this.route.snapshot.params.user_id, message: this.chatForm.value.message, photo: this.chatForm.value.photo}
       this.chatService.sendMessage(data)
       this.chatService.getMessages().subscribe(data => {
         this.store.dispatch(OtherActions.createChat({chat: data}))
-
-        this.scrollDown()
       })
     }
-    this.chatForm.reset()
 
+    this.chatForm.reset(
+      {message: ' .'}
+    )
+    this.scrollToBottom(60);
   }
 
-  scrollDown() {
-    const chat = document.getElementById('messages-content');
-    if (chat) {
-      console.log(chat.scrollTop, chat.scrollHeight)
-      chat.scrollTop = chat.scrollHeight;
-      chat.scroll(0, chat.scrollHeight)
-      console.log(chat.scrollTop, chat.scrollHeight)
+  // sendFile(event: any) {
+  //   const file = event.target.files[0];
+  //   const reader = new FileReader();
+  //   reader.onload = (e) => {
+  //     const data = {to: this.route.snapshot.params.user_id, message: reader.result}
+  //     this.chatService.sendMessage(data)
+  //     this.chatService.getMessages().subscribe(data => {
+  //       this.store.dispatch(OtherActions.createChat({chat: data}))
+  //     })
+  //   }
+  //   reader.readAsDataURL(file);
+  // }
+
+  private scrollToBottom(num: number): void {
+    try {
+      this.chatContainer.nativeElement.scrollTop = this.chatContainer.nativeElement.scrollHeight + num;
+    } catch (err) {
     }
   }
 
 }
 
-// у меня есть чат проэкт в ангулар как сделать скролл вниз если написал новый сообщение  html:<div class="chat-bottom dark-bg p-3 shadow-none theme-dark-bg" style="width: 98%;">
-//         <form [formGroup]="chatForm" (ngSubmit)="sendMessage()" class="chat-form">
-//           <button class="bg-grey float-left"><i class="bi bi-image"></i></button>
-//           <div class="form-group">
-//             <input formControlName="message" class="form-control" name="message" style="color: black" type="text"
-//                    placeholder="Start typing..">
-//           </div>
-//           <button class="bg-current"><i class="bi bi-arrow-right-circle"></i></button>
-//         </form>
-//       </div>
-// comp:export class ChatComponent implements OnInit {
-//   chats$!: Observable<Chat[]>
-//   chatForm!: FormGroup;
-//   authUser$!: Observable<User | null>;
-//
-//   constructor(private userService: UserService, private store: Store<any>,
-//               private route: ActivatedRoute, private router: Router,
-//               private chatService: ChatService) {
-//     this.authUser$ = this.store.select(AuthSelectors.selectAuthUser)  }
-//
-//   ngOnInit() {  }
-//
-//   sendMessage() {  }
