@@ -26,12 +26,22 @@ export class ChatService {
     this.socket.emit('join', data)
   }
 
-  sendMessage(data: { to: string, message: string, photo: string | null }) {
-    this.http.post<Chat>(this.url + 'chat/' + data.to, data, {withCredentials: true}).subscribe(
+  sendMessage(data: { to: string, message: string, photo: File | null }) {
+    const formData = new FormData();
+    formData.append('message', data.message);
+    if (data.photo) {
+      formData.append('photo', data.photo);
+    }
+    formData.append('to', data.to);
+    // this.http.post(this.url + 'chat', formData).subscribe(res => {
+    //   console.log(res)
+    // })
+    this.http.post<Chat>(this.url + 'chat/' + data.to, formData,
+      {withCredentials: true,reportProgress: true, responseType: 'json'}).subscribe(
       res => {
+        console.log(res)
         this.socket.emit('message', res)
       })
-    // this.socket.emit('message',data)
   }
 
   getMessages() {

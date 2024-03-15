@@ -36,21 +36,23 @@ export class ChatComponent implements OnInit {
       if (id) {
         this.userService.getUserChats(id).subscribe(res => this.store.dispatch(OtherActions.loadChatsSuccess({chats: res})));
         this.chats$ = this.store.select(otherSelectors.selectChats)
+        this.store.select(otherSelectors.selectChats).subscribe(data => {
+          console.log(data)
+        })
       } else {
         this.router.navigate(['/'])
       }
     })
     this.chatForm = new FormGroup({
       message: new FormControl<string>(' .', [Validators.required]),
-      photo: new FormControl<string|null>(null)
+      photo: new FormControl<File|null>(null)
     })
 
     this.scrollToBottom(0);
 
   }
   onImagePicked(event: Event) {
-    // @ts-ignore
-    const file = (event.target as HTMLInputElement).files[0];
+    const file = (event.target as HTMLInputElement).files![0];
     this.chatForm.patchValue({ photo: file});
   }
   sendMessage() {
@@ -63,6 +65,7 @@ export class ChatComponent implements OnInit {
      //    })
      // }
       const data = {to: this.route.snapshot.params.user_id, message: this.chatForm.value.message, photo: this.chatForm.value.photo}
+      // console.log(data)
       this.chatService.sendMessage(data)
       this.chatService.getMessages().subscribe(data => {
         this.store.dispatch(OtherActions.createChat({chat: data}))

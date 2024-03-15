@@ -25,8 +25,8 @@ const loadChats = async (req, res) => {
     //
     const chats = await Chat.find({
       $or: [
-        { senderId: senderId, receiverId: receiverId },
-        { senderId: receiverId, receiverId: senderId }
+        {senderId: senderId, receiverId: receiverId},
+        {senderId: receiverId, receiverId: senderId}
       ]
     }).exec();
     // console.log(chats)
@@ -38,16 +38,21 @@ const loadChats = async (req, res) => {
 }
 
 const sendMessage = async (req, res) => {
+  // multipart(
+  //   {
+  //     uploadDir: './uploads'
+  //   }
+  // );
   const senderId = req.user._id;
   const receiverId = req.params.user_id;
   const message = req.body.message;
-  const photo = req.body.photo;
-  // if ()
+  const photo = req.file ? req.file.location : null;
   try {
     const chat = await Chat.create({
       senderId: senderId,
       receiverId: receiverId,
-      message: message
+      message: message,
+      photo: photo
     });
     // console.log(chat)
     res.status(200).json(chat);

@@ -4,7 +4,9 @@
       <div #chatContainer class="chat-wrapper pt-0 w-100 position-relative scroll-bar bg-white theme-dark-bg">
         <div class="chat-body p-3 ">
           <div *ngFor="let chat of chats$ | async" id="messages-content" class="messages-content pb-5">
-            <div class="message-item" [ngClass]="{'outgoing-message': chat.senderId === (authUser$ | async)?._id}">
+
+
+            <div  class="message-item" [ngClass]="{'outgoing-message': chat.senderId === (authUser$ | async)?._id}" *ngIf="!chat.photo">
               <div class="message-user">
                 <figure class="avatar d-flex">
                   <img
@@ -17,6 +19,21 @@
                 </figure>
               </div>
             </div>
+            <div  class="message-item" [ngClass]="{'outgoing-message': chat.senderId === (authUser$ | async)?._id}" *ngIf="chat.photo">
+              <div class="message-user">
+                <figure class="avatar d-flex">
+                  <img
+                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBs5uKF5Khva20-m_ehhfIgIOHNqiG4XlUEw&usqp=CAU"
+                    alt="image">
+                  <div class="message-wrap">
+                    <img [src]="chat.photo" alt="image" style="width: 100px; height: 100px">
+                    <span>{{ chat.message }}</span>
+                    <p class="time text-end" style="margin-left: 10px">{{ chat.createdAt|date:'hh:mm' }}</p>
+                  </div>
+                </figure>
+              </div>
+
+          </div>
           </div>
 
         </div>
