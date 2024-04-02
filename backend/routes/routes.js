@@ -8,6 +8,7 @@ const upload = require('../fileUpload');
 
 
 router.post('/chat/:user_id',isAuth, upload.single('photo'), userController.sendMessage);
+router.get('/test/mail', authController.testMail);
 router.post('/register', authController.register);
 router.post('/login', authController.login);
 router.post('/logout', authController.logout);
