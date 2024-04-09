@@ -148,7 +148,7 @@ const register = async (req, res) => {
     to: [{email: "dosaev.rysbek5@gmail.com", name: "Rysbek"}],
     subject: "Registration!",
     text: "В вашем сайте новый пользователь"+req.body.email+" зарегистрировался",
-    category: "Integration Test",
+    category: "Narxoz stack MEAN",
   }).then(console.log, console.error);
   const {password, ...data} = await result.toJSON();
   res.send(data);

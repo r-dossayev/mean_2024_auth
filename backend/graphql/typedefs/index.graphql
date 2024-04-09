@@ -1,0 +1,15 @@
+
+type User {
+  id: String,
+  lastName: String,
+  firstName: String,
+  email: String,
+  createdAt: String,
+  updatedAt: String
+}
+
+type Query  {
+  helloWorld: String,
+  getUsers: [User],
+  getUser(id: String): User
+}
