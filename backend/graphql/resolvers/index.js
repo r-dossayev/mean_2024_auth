@@ -5,10 +5,10 @@ const User = require("../../models/user");
 const Query = {
   helloWorld: () => 'userSchema.find(),',
   getUsers: async () => {
-    return await User.find();
+    return User.find();
   },
   getUser: async (parent, {id}) => {
-    return await User.findById(id);
+    return User.findById(id);
   }
 }
 

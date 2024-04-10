@@ -15,6 +15,10 @@ import {authReducer} from "./state/auth/auth.reducer";
 import {NgOptimizedImage} from "@angular/common";
 import {otherReducer} from "./state/other/other.reducer";
 import {ChatComponent} from "./components/chat/chat.component";
+import { GraphQLModule } from './graphql.module';
+import {APOLLO_OPTIONS} from "apollo-angular";
+import {HttpLink} from "apollo-angular/http";
+import {InMemoryCache} from "@apollo/client/core";
 
 @NgModule({
   declarations: [
@@ -33,6 +37,7 @@ import {ChatComponent} from "./components/chat/chat.component";
         ReactiveFormsModule,
         HttpClientModule,
         NgOptimizedImage,
+        GraphQLModule,
         // StoreModule.forRoot({ postSlice: postReducer })
     ],
   providers: [
@@ -40,6 +45,18 @@ import {ChatComponent} from "./components/chat/chat.component";
     provideState({name:"post",reducer:postReducer}),
     provideState({name:"auth",reducer:authReducer}),
     provideState({name:"other",reducer:otherReducer}),
+    // {
+    //   provide: APOLLO_OPTIONS,
+    //   useFactory(httpLink: HttpLink) {
+    //     return {
+    //       cache: new InMemoryCache(),
+    //       link: httpLink.create({
+    //         uri: 'http://localhost:8787/graphql',
+    //       }),
+    //     };
+    //   },
+    //   deps: [HttpLink],
+    // },
   ],
   bootstrap: [AppComponent]
 })
