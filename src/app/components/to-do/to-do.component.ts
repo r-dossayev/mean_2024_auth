@@ -5,6 +5,8 @@ import {Store} from "@ngrx/store";
 import * as TaskActions from "../../state/task/task.actions";
 import * as TaskSelectors from "../../state/task/task.selector";
 import {Observable} from "rxjs";
+import {Chat} from "../../models/chat.model";
+import * as OtherActions from "../../state/other/other.actions";
 
 @Component({
   selector: 'app-to-do',
@@ -34,6 +36,10 @@ export class ToDoComponent {
       console.log("error")
       }
     )
+    this.taskService.getNewTask().subscribe(data => {
+      console.log(data, "data")
+      this.store.dispatch(TaskActions.addTask({task: data.task}))
+    })
     this.taskList$ = this.store.select(TaskSelectors.selectTaskList)
     // this.isAuth$ = this.store.select(AuthSelectors.selectIsAuthenticated)
     // this.$authUser = this.store.select(AuthSelectors.selectAuthUser)
@@ -62,16 +68,20 @@ export class ToDoComponent {
     console.log(task);
     this.taskService.addTask(task).subscribe((task: Task) => {
       console.log(task)
+      this.taskService.socket.emit('new_task', task)
       console.log('task')
-      this.store.dispatch(TaskActions.addTask({task}))
+      // this.store.dispatch(TaskActions.addTask({task}))
+      // this.taskService.getNewTask().subscribe(data => {
+      //   console.log(data, "data")
+      //   this.store.dispatch(TaskActions.addTask({task: data.task}))
+      // })
     });
     // refresh the list
   }
 
   deleteTask(id: string) {
-    this.taskService.deleteTask(id).subscribe((task: Task) => {
-      this.store.dispatch(TaskActions.deleteTask({id}))
-    });
+    this.taskService.deleteTask(id).subscribe( ()=>this.store.dispatch(TaskActions.deleteTask({id})))
+
   }
 
 
@@ -88,5 +98,7 @@ export class ToDoComponent {
       this.store.dispatch(TaskActions.updateTask({task}))
     });
   }
+
+
 
 }

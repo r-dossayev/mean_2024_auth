@@ -8,11 +8,14 @@ import {HttpClient} from "@angular/common/http";
 import {gql} from "@apollo/client/core";
 import * as AuthActions from "../state/auth/auth.actions";
 import {Apollo} from "apollo-angular";
+import {Chat} from "../models/chat.model";
+import {io} from "socket.io-client";
 @Injectable({
   providedIn: 'root'
 })
 export class TaskService {
 
+  public socket = io('http://localhost:8787');
   constructor( private http: HttpClient , private apollo: Apollo
   ) { }
   url = "http://localhost:8787/api/";
@@ -27,7 +30,7 @@ export class TaskService {
       query: gql`
         query {
           getTasks {
-            id,
+            _id,
             description,
             title,
             status,
@@ -79,20 +82,36 @@ export class TaskService {
   }
 
   deleteTask(id:string) {
-    let ajax$ = ajax({
-      url: this.url + "task/"+id,
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
 
-    return new Observable<Task>(observer => {
-      ajax$.subscribe((response:any) => {
-        observer.next(response.response.data);
-        observer.complete();
+    console.log(id, "id")
+    return this.http.delete(this.url + "task/"+id, {withCredentials: true});
+  }
+  newTask(data: { title: string; description: string; status: string }) {
+    const formData = new FormData();
+    formData.append('title', data.title);
+    formData.append('description', data.description);
+    formData.append('status', data.status);
+    // this.http.post(this.url + 'chat', formData).subscribe(res => {
+    //   console.log(res)
+    // })
+    this.http.post<Task>(this.url + 'task' , formData,
+      {withCredentials: true,reportProgress: true, responseType: 'json'}).subscribe(
+      res => {
+        console.log(res)
+        this.socket.emit('new_task', res)
+      })
+  }
+
+  getNewTask() {
+    return new Observable<any>(observer => {
+      this.socket.on('loadNewTask', (data) => {
+        observer.next(data);
       });
+      return () => {
+        this.socket.disconnect();
+      };
     });
   }
+
 
 }

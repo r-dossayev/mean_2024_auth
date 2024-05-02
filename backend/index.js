@@ -81,6 +81,18 @@ io.on('connection', (socket) => {
       photo: data.photo
     });
   });
+  socket.on('new_task', (data) => {
+    console.log(data);
+    io.emit('loadNewTask', {
+      task: {
+        title: data.title,
+        description: data.description,
+        created_at: data.created_at,
+        _id: data._id,
+        status: data.status,
+      }
+    });
+  },);
   socket.on('disconnect', () => {
     console.log('user disconnected');
   });
