@@ -30,7 +30,8 @@ app.use(express.urlencoded({extended: true}));
 app.use(cookieParser());
 app.use(cors({
   credentials: true,
-  origin: ['http://localhost:3000', 'http://localhost:8080', 'http://localhost:4200','https://studio.apollographql.com'],
+  origin: ['http://localhost:3000', 'http://localhost:8080', 'http://localhost:4200',
+    'https://studio.apollographql.com', 'https://chat-frontend-1.herokuapp.com'],
 }));
 
 
@@ -69,7 +70,7 @@ server.listen(port, () => {
   console.log(`Server is running on port ${port}`);
   console.log(`gql server is running on http://localhost:${port}/graphql`);
 });
-
+// apolloServer.applyMiddleware({ app, path: '/graphql' });
 io.on('connection', (socket) => {
   socket.on('message', (data) => {
     io.emit('loadNewChat', {

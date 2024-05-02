@@ -15,10 +15,17 @@ import {authReducer} from "./state/auth/auth.reducer";
 import {NgOptimizedImage} from "@angular/common";
 import {otherReducer} from "./state/other/other.reducer";
 import {ChatComponent} from "./components/chat/chat.component";
+import {ToDoComponent} from "./components/to-do/to-do.component";
+import {taskReducer} from "./state/task/task.reducer";
 import { GraphQLModule } from './graphql.module';
 import {APOLLO_OPTIONS} from "apollo-angular";
 import {HttpLink} from "apollo-angular/http";
 import {InMemoryCache} from "@apollo/client/core";
+
+// import { GraphQLModule } from './graphql.module';
+// import {APOLLO_OPTIONS} from "apollo-angular";
+// import {HttpLink} from "apollo-angular/http";
+// import {InMemoryCache} from "@apollo/client/core";
 
 @NgModule({
   declarations: [
@@ -28,8 +35,10 @@ import {InMemoryCache} from "@apollo/client/core";
     HomeComponent,
       ChatComponent,
     NotFoundComponent,
+    ToDoComponent,
 
   ],
+  // exports: [FormsModule, ReactiveFormsModule,ToDoComponent],
     imports: [
         BrowserModule,
         AppRoutingModule,
@@ -38,6 +47,7 @@ import {InMemoryCache} from "@apollo/client/core";
         HttpClientModule,
         NgOptimizedImage,
         GraphQLModule,
+        // GraphQLModule,
         // StoreModule.forRoot({ postSlice: postReducer })
     ],
   providers: [
@@ -45,6 +55,7 @@ import {InMemoryCache} from "@apollo/client/core";
     provideState({name:"post",reducer:postReducer}),
     provideState({name:"auth",reducer:authReducer}),
     provideState({name:"other",reducer:otherReducer}),
+    provideState({name:"task",reducer:taskReducer}),
     // {
     //   provide: APOLLO_OPTIONS,
     //   useFactory(httpLink: HttpLink) {

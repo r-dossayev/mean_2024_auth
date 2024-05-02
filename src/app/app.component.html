@@ -104,6 +104,12 @@
         </a>
       </li>
       <li class="nav-item" *ngIf="(isAuth$|async)">
+        <a class="nav-link collapsed" routerLink="/tasks">
+          <i class="bi bi-people"></i>
+          <span>Tasks</span>
+        </a>
+      </li>
+      <li class="nav-item" *ngIf="(isAuth$|async)">
         <a class="nav-link collapsed" routerLink="/groups/${globalAuthUser.username">
           <i class="bi bi-people"></i>
           <span>groups</span>

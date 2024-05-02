@@ -7,6 +7,7 @@ import {NotFoundComponent} from "./components/not-found/not-found.component";
 import {ProfileComponent} from "./components/profile/profile.component";
 import {UserComponent} from "./components/user/user.component";
 import {ChatComponent} from "./components/chat/chat.component";
+import {ToDoComponent} from "./components/to-do/to-do.component";
 
 
 const routes: Routes = [
@@ -14,8 +15,9 @@ const routes: Routes = [
   {path: 'register', component: RegisterComponent},
   {path: 'home', component: HomeComponent},
   {path: 'profile', component: ProfileComponent},
-  {path:'user/:user_id', component: UserComponent},
-  {path:'chat/:user_id', component: ChatComponent},
+  {path: 'user/:user_id', component: UserComponent},
+  {path: 'chat/:user_id', component: ChatComponent},
+  {path: 'tasks', component: ToDoComponent},
   {path: '', pathMatch: 'full', redirectTo: '/home'},
   {path: '**', component: NotFoundComponent}
 ];

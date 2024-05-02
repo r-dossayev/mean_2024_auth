@@ -6,20 +6,18 @@ type User {
   email: String,
   createdAt: String,
   updatedAt: String,
+  //chats: [Chat]
 }
-type Task {
-  id: String,
-  title: String,
-  status: String,
-  description: String,
-  created_at: String,
-  updated_at: String,
 
-}
+//type Chat {
+ // id: String,
+//  createdAt: String,
+//  updatedAt: String,
+//  messages: [Message]
+//}
 
 type Query {
   helloWorld: String,
   getUsers: [User],
   getUser(id: String): User
-  getTasks: [Task],
 }
