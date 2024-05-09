@@ -3,6 +3,8 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {User} from "../models/user.model";
 import {Chat} from "../models/chat.model";
+import {gql} from "@apollo/client/core";
+import {Apollo} from "apollo-angular";
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +13,8 @@ export class UserService {
   url = 'http://localhost:8787/api/';
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private apollo: Apollo
   ) {
   }
 
@@ -30,6 +33,22 @@ export class UserService {
 
   sendMessage(data: {to:string, message:string}):Observable<Chat>{
     return this.http.post<Chat>(this.url + 'chat/'+data.to, data, {withCredentials: true});
+  }
+  getUsersGraph(): Observable<any> {
+    return this.apollo
+    .watchQuery<any>({
+      query: gql`
+        query {
+          getUsers {
+            id,
+            email,
+            firstName,
+            lastName
+          }
+        }
+      `,
+    })
+    .valueChanges;
   }
 
 }

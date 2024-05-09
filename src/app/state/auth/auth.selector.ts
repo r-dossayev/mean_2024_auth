@@ -17,3 +17,8 @@ export const selectUserList = createSelector(
   selectAuthFeature,
   (state: AuthState) => state.userLists
 )
+
+export const selectAuthError = createSelector(
+  selectAuthFeature,
+  (state: AuthState) => state.error
+)

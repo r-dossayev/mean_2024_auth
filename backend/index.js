@@ -37,40 +37,30 @@ app.use(cors({
 
 const ggFiles = fs.readdirSync(path.join(__dirname, '/graphql/typedefs'));
 let typeDefs = '';
-
 ggFiles.forEach(file => {
   typeDefs += fs.readFileSync(path.join(__dirname, '/graphql/typeDefs', file), 'utf-8');
-
 })
 const resolvers = require('./graphql/resolvers/index');
 
-let apolloServer = {
-  graphqlPath: '',
-}
+let apolloServer = {graphqlPath: '',}
 
 async function startServer() {
-
-  apolloServer = new ApolloServer({
-    typeDefs,
-    resolvers,
-    // context: ({req, res}) => ({req, res})
-  });
+  apolloServer = new ApolloServer({typeDefs, resolvers,});
   await apolloServer.start();
-
   apolloServer.applyMiddleware({app, path: '/graphql'});
 }
-startServer()
+
+startServer().then(r => console.log('Apollo server started'));
 
 const port = process.env.PORT || 5000;
 app.use('/api', routes);
 console.log(`gql server is running on: ${apolloServer.graphqlPath}`);
 
-// server.listen(port, () => {
 server.listen(port, () => {
   console.log(`Server is running on port ${port}`);
   console.log(`gql server is running on http://localhost:${port}/graphql`);
 });
-// apolloServer.applyMiddleware({ app, path: '/graphql' });
+
 io.on('connection', (socket) => {
   socket.on('message', (data) => {
     io.emit('loadNewChat', {
@@ -82,7 +72,6 @@ io.on('connection', (socket) => {
     });
   });
   socket.on('new_task', (data) => {
-    console.log(data);
     io.emit('loadNewTask', {
       task: {
         title: data.title,
