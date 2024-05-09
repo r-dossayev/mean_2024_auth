@@ -41,8 +41,8 @@ AWS.config.update({
 });
 
 const s3 = new AWS.S3();
-console.log(s3)
-console.log("s3")
+// console.log(s3)
+// console.log("s3")
 
 const upload = multer({
 
