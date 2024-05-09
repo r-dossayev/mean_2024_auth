@@ -28,6 +28,9 @@ export class ChatComponent implements OnInit {
               private route: ActivatedRoute, private router: Router,
               private chatService: ChatService) {
     this.authUser$ = this.store.select(AuthSelectors.selectAuthUser)
+    this.chatService.getMessages().subscribe(data => {
+      this.store.dispatch(OtherActions.createChat({chat: data}))
+    })
   }
 
   ngOnInit() {
@@ -57,19 +60,10 @@ export class ChatComponent implements OnInit {
   }
   sendMessage() {
     if (!this.chatForm.invalid) {
-     // if (this.chatForm.value.photo) {
-     //    const data = {to: this.route.snapshot.params.user_id, message: this.chatForm.value.message}
-     //    this.chatService.sendMessage(data)
-     //    this.chatService.getMessages().subscribe(data => {
-     //      this.store.dispatch(OtherActions.createChat({chat: data}))
-     //    })
-     // }
+
       const data = {to: this.route.snapshot.params.user_id, message: this.chatForm.value.message, photo: this.chatForm.value.photo}
-      // console.log(data)
       this.chatService.sendMessage(data)
-      this.chatService.getMessages().subscribe(data => {
-        this.store.dispatch(OtherActions.createChat({chat: data}))
-      })
+
     }
 
     this.chatForm.reset(

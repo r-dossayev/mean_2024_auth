@@ -8,7 +8,7 @@ import {RegisterComponent} from './components/register/register.component';
 import {HomeComponent} from './components/home/home.component';
 import {NotFoundComponent} from './components/not-found/not-found.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {provideState, provideStore} from "@ngrx/store";
 import {postReducer} from "./state/post/post.reducer";
 import {authReducer} from "./state/auth/auth.reducer";
@@ -21,6 +21,7 @@ import { GraphQLModule } from './graphql.module';
 import {APOLLO_OPTIONS} from "apollo-angular";
 import {HttpLink} from "apollo-angular/http";
 import {InMemoryCache} from "@apollo/client/core";
+import {authInterceptor} from "./interceptors/auth.interceptor";
 
 // import { GraphQLModule } from './graphql.module';
 // import {APOLLO_OPTIONS} from "apollo-angular";
@@ -56,6 +57,10 @@ import {InMemoryCache} from "@apollo/client/core";
     provideState({name:"auth",reducer:authReducer}),
     provideState({name:"other",reducer:otherReducer}),
     provideState({name:"task",reducer:taskReducer}),
+    {
+      provide: HTTP_INTERCEPTORS, useClass: authInterceptor, multi: true
+
+    }
     // {
     //   provide: APOLLO_OPTIONS,
     //   useFactory(httpLink: HttpLink) {

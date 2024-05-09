@@ -8,7 +8,8 @@ const socketIo = require('socket.io');
 const {ApolloServer} = require('apollo-server-express');
 const fs = require('fs');
 const path = require('path');
-
+const swaggerJsdoc = require("swagger-jsdoc");
+const swaggerUi = require("swagger-ui-express");
 
 mongoose.connect(process.env.MONGO_URI,)
   .then(() => console.log("Соединение с базой данных установлено"))
@@ -54,6 +55,46 @@ startServer().then(r => console.log('Apollo server started'));
 
 const port = process.env.PORT || 5000;
 app.use('/api', routes);
+const options = {
+  definition: {
+    openapi: "3.1.0",
+    info: {
+      title: "Chat API",
+      version: "0.1.0",
+      description:
+        "Это документация API для приложения чата",
+      license: {
+        name: "MIT",
+        url: "https://spdx.org/licenses/MIT.html",
+      },
+      contact: {
+        name: "LogRocket",
+        url: "https://logrocket.com",
+        email: "info@email.com",
+      },
+    },
+    servers: [
+      {
+        url: "http://localhost:8787",
+        description: "Backend Development server",
+      },
+      {
+        url: "http://localhost:4200",
+        description: "Frontend",
+      }
+    ],
+  },
+  apis: [
+    './swagger/*.js',
+  ],
+};
+
+const specs = swaggerJsdoc(options);
+app.use(
+  "/api-docs",
+  swaggerUi.serve,
+  swaggerUi.setup(specs)
+);
 console.log(`gql server is running on: ${apolloServer.graphqlPath}`);
 
 server.listen(port, () => {

@@ -1,6 +1,6 @@
 
 type User {
-  id: String,
+  _id: String,
   lastName: String,
   firstName: String,
   email: String,

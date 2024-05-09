@@ -40,7 +40,7 @@ export class UserService {
       query: gql`
         query {
           getUsers {
-            id,
+            _id,
             email,
             firstName,
             lastName
