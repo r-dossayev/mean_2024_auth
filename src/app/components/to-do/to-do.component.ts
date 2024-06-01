@@ -29,7 +29,6 @@ export class ToDoComponent {
   constructor(private store: Store<any>, private taskService: TaskService) {
     console.log("constructor")
     taskService.getTasks2().subscribe(req => {
-
       this.store.dispatch(TaskActions.taskLists({tasks: req.data.getTasks}))
     }, error => {
       console.log(error)

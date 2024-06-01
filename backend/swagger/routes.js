@@ -1,100 +1,100 @@
 /**
  * @swagger
  * tags:
- *   name: Books
- *   description: The books managing API
- * /books:
+ *   name: Задачи
+ *   description: Эндпоинты для работы с задачами
+ * /api/task:
  *   get:
- *     summary: Lists all the books
- *     tags: [Books]
+ *     summary: Получить список задач
+ *     tags: [Задачи]
  *     responses:
  *       200:
- *         description: The list of the books
+ *         description: Возвращает список задач
  *         content:
  *           application/json:
  *             schema:
  *               type: array
  *               items:
- *                 $ref: '#/components/schemas/Book'
+ *                 $ref: '#/components/schemas/Task'
  *   post:
- *     summary: Create a new book
- *     tags: [Books]
+ *     summary: Создать новую задачу
+ *     tags: [Задачи]
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/Book'
+ *             $ref: '#/components/schemas/Task'
  *     responses:
  *       200:
- *         description: The created book.
+ *         description:  Задача создана
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Book'
+ *               $ref: '#/components/schemas/Task'
  *       500:
- *         description: Some server error
- * /books/{id}:
+ *         description: Ошибка сервера
+ * /task/{id}:
  *   get:
- *     summary: Get the book by id
- *     tags: [Books]
+ *     summary: Получить задачу по id
+ *     tags: [Задачи]
  *     parameters:
  *       - in: path
  *         name: id
  *         schema:
  *           type: string
  *         required: true
- *         description: The book id
+ *         description: id задачи
  *     responses:
  *       200:
- *         description: The book response by id
- *         contens:
+ *         description: Task by id
+ *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Book'
+ *               $ref: '#/components/schemas/Task'
  *       404:
- *         description: The book was not found
+ *         description: Задача не найдена
  *   put:
- *    summary: Update the book by the id
- *    tags: [Books]
+ *    summary: Обновить задачу по id
+ *    tags: [Задачи]
  *    parameters:
  *      - in: path
  *        name: id
  *        schema:
  *          type: string
  *        required: true
- *        description: The book id
+ *        description:  id задачи
  *    requestBody:
  *      required: true
  *      content:
  *        application/json:
  *          schema:
- *            $ref: '#/components/schemas/Book'
+ *            $ref: '#/components/schemas/Task'
  *    responses:
  *      200:
- *        description: The book was updated
+ *        description: Задача обновлена
  *        content:
  *          application/json:
  *            schema:
- *              $ref: '#/components/schemas/Book'
+ *              $ref: '#/components/schemas/Task'
  *      404:
- *        description: The book was not found
+ *        description: Задача не найдена
  *      500:
- *        description: Some error happened
+ *        description: Ошибка сервера
  *   delete:
- *     summary: Remove the book by id
- *     tags: [Books]
+ *     summary: Удалить задачу по id
+ *     tags: [Задачи]
  *     parameters:
  *       - in: path
  *         name: id
  *         schema:
  *           type: string
  *         required: true
- *         description: The book id
+ *         description: id задачи
  *
  *     responses:
  *       200:
- *         description: The book was deleted
+ *         description: Задача удалена
  *       404:
- *         description: The book was not found
+ *         description: Задача не найдена
  */
