@@ -1,13 +1,19 @@
-FROM node:14
+FROM node:20
 
-WORKDIR /app
+# Создать рабочую директорию
+WORKDIR /usr/src/app
 
-COPY package*.json ./
+# Копировать package.json и package-lock.json в рабочую директорию
+COPY backend/package*.json ./
 
-RUN npm install --production
+# Установить зависимости
+RUN npm install
 
-COPY . .
+# Копировать исходный код приложения
+COPY backend/ ./
 
-EXPOSE 8787
+# Открыть порт 3000
+EXPOSE 3000
 
-CMD ["node", "index.js"]
+# Команда для запуска приложения
+CMD [ "node", "index.js" ]
